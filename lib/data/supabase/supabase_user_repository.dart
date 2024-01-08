@@ -2,6 +2,7 @@ import 'package:tugasbesar_2172008/data/repositories/user_repository.dart';
 import 'package:tugasbesar_2172008/entities/person.dart';
 import 'package:tugasbesar_2172008/provider/user_data_provider.dart';
 import 'package:supabase/supabase.dart' as data;
+import 'package:tugasbesar_2172008/entities/history.dart';
 
 class SupabaseUserRepository implements UserRepository {
   final UserData username;
@@ -53,7 +54,6 @@ class SupabaseUserRepository implements UserRepository {
   Future<void> updateMoney(int money, String email) async {
     await Future.delayed(const Duration(seconds: 2));
     await supabase.from("person").update({'balance': money}).eq('email', email);
-    print("aaa");
     return;
   }
 
@@ -85,16 +85,24 @@ class SupabaseUserRepository implements UserRepository {
     await Future.delayed(const Duration(seconds: 2));
     int sumMoneyUser = moneyUser - amount;
     int sumMoneyTarget = moneyTarget + amount;
-    print(sumMoneyUser);
-    print(sumMoneyTarget);
-    print(emailUser);
-    print(emailTarget);
 
     updateMoney(sumMoneyUser, emailUser);
     updateMoney(sumMoneyTarget, emailTarget);
     return;
   }
+
+  @override
+  Future<History?> showHistory(String emailUser) async {
+    await Future.delayed(const Duration(seconds: 2));
+    final response =
+        await supabase.from('history').select('*').eq('email', emailUser);
+    final emails = response[0]['email'] as String;
+    final amounts = response[0]['amount'] as int;
+    final descriptions = response[0]['desciprion'] as String;
+    return History(email: emails, amount: amounts, description: descriptions);
+  }
 }
+
   // @override
   // Future<Person> editUser(String email, String password, String name) async {
   //   await Future.delayed(const Duration(seconds: 2));

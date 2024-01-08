@@ -1,8 +1,10 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tugasbesar_2172008/entities/person.dart';
+import 'package:tugasbesar_2172008/provider/history_provider.dart';
 import 'package:tugasbesar_2172008/provider/money_provider.dart';
 import 'package:tugasbesar_2172008/provider/singup_provider.dart';
 import 'package:tugasbesar_2172008/provider/transfer_provider.dart';
+import 'package:tugasbesar_2172008/usecase/history_param.dart';
 import 'package:tugasbesar_2172008/usecase/login.dart';
 import 'package:tugasbesar_2172008/usecase/login_param.dart';
 import 'package:tugasbesar_2172008/usecase/money.dart';
@@ -11,8 +13,8 @@ import 'package:tugasbesar_2172008/usecase/signup.dart';
 import 'package:tugasbesar_2172008/usecase/signup_param.dart';
 import 'package:tugasbesar_2172008/usecase/transfer.dart';
 import 'package:tugasbesar_2172008/usecase/transfer_param.dart';
+import '../usecase/history.dart';
 import 'login_provider.dart';
-
 part 'user_data_provider.g.dart';
 
 @Riverpod(keepAlive: true)
@@ -43,13 +45,9 @@ class UserData extends _$UserData {
     int moneys,
     String emails,
   ) async {
-
-
     Money money = ref.read(moneyProvider);
 
     await money(MoneyParam(money: moneys, email: emails));
-
-
   }
 
   Future<void> transfer(
@@ -59,8 +57,6 @@ class UserData extends _$UserData {
     int moneyTargets,
     int amounts,
   ) async {
-
-
     Transfer transfer = ref.read(transferProvider);
 
     await transfer(TransferParam(
@@ -69,8 +65,17 @@ class UserData extends _$UserData {
         moneyUser: moneyUsers,
         moneyTarget: moneyTargets,
         amount: amounts));
+  }
+  
+  Future<void> history(String emails) async {
+    state = const AsyncLoading();
 
+    HistoryRecord history = ref.read(historyProvider);
 
+    await history(
+        HistoryParam(email: emails));
+
+    state = const AsyncData(null);
   }
 
   Future<void> logout() async {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tugasbesar_2172008/pages/home.dart';
 import 'package:tugasbesar_2172008/provider/user_data_provider.dart';
 
 class GetMoney {
@@ -40,6 +41,12 @@ class RequestPage extends ConsumerWidget {
                 final money = moneyData.money.text;
                 int? intMoney = int.tryParse(money);
                 int? sumMoney = intMoney! + moneyUser;
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HomePage(),
+                  ),
+                );
                 final email = emailUser.text;
                 await ref
                     .read(userDataProvider.notifier)
