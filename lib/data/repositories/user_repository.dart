@@ -8,5 +8,5 @@ abstract interface class UserRepository {
   Future<Person?> getUserByEmail(String email);
   Future<void> transfer(String emailUser,String emailTarget,int moneyUser,int moneyTarget, int amount);
   Future<void> addPocket(int balance, String email, String description);
-  // Future<Person> editUser(String email, String password,String name);
+  Future<void> editUser(String email, String name, String address, String phone);
 }

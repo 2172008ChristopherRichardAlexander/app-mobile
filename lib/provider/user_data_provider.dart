@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tugasbesar_2172008/entities/person.dart';
+import 'package:tugasbesar_2172008/provider/editprofile_provider.dart';
 import 'package:tugasbesar_2172008/provider/money_provider.dart';
 import 'package:tugasbesar_2172008/provider/pockets_provider.dart';
 import 'package:tugasbesar_2172008/provider/singup_provider.dart';
@@ -14,6 +15,8 @@ import 'package:tugasbesar_2172008/usecase/signup.dart';
 import 'package:tugasbesar_2172008/usecase/signup_param.dart';
 import 'package:tugasbesar_2172008/usecase/transfer.dart';
 import 'package:tugasbesar_2172008/usecase/transfer_param.dart';
+import 'package:tugasbesar_2172008/usecase/update.dart';
+import 'package:tugasbesar_2172008/usecase/update_param.dart';
 import 'login_provider.dart';
 part 'user_data_provider.g.dart';
 
@@ -80,6 +83,17 @@ class UserData extends _$UserData {
     
   }
 
+
+  Future<void> updateUser(String email, String name, String address, String phone) async {
+    state = const AsyncLoading();
+
+    Update update = ref.read(updateProfileProvider);
+
+    await update(
+        UpdateParam(email: email, name: name, address: address, phone: phone));
+
+    
+  }
 
   Future<void> logout() async {
     // Panggil usecase logout
