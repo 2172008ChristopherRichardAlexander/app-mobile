@@ -6,7 +6,7 @@ part of 'showpocket_user_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$showPocketUserHash() => r'a5cb6b784ebc743b2f28378aa3ef3e806d8272db';
+String _$showPocketUserHash() => r'15c5cdff902ccc66026ba4676b21c59a4c98ccbf';
 
 /// See also [ShowPocketUser].
 @ProviderFor(ShowPocketUser)

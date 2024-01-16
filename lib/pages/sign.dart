@@ -136,6 +136,13 @@ class SignUpPage extends ConsumerWidget {
                         ),
                         child: TextButton(
                           onPressed: () async {
+                            Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const LoginPage(),
+                                            ),
+                                          );
                             final email = signupData.email.text;
                             final password = signupData.password.text;
                             final name = signupData.name.text;

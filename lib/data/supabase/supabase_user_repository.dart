@@ -107,18 +107,14 @@ class SupabaseUserRepository implements UserRepository {
 
     updateMoney(sumOfMoney, email);
   }
+  
+  @override
+  Future<void> editUser(String email, String name, String address, String phone) async {
+    await Future.delayed(const Duration(seconds: 2));
+    await supabase
+        .from("person")
+        .update({'name': name, 'address': address, 'phone': phone}).eq('email', email);
+  }
 }
 
-  // @override
-  // Future<Person> editUser(String email, String password, String name) async {
-  //   await Future.delayed(const Duration(seconds: 2));
-  //   final supabase = data.SupabaseClient(
-  //       'https://tpjniryfelhtqnjuiexl.supabase.co/',
-  //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwam5pcnlmZWxodHFuanVpZXhsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDA1MzU0MzUsImV4cCI6MjAxNjExMTQzNX0.b2p-2n1ajX4qeQFAS0g21XOeJyyKBr95ZL7aM307BVU');
-  //   await supabase
-  //       .from("person")
-  //       .insert({'email': email, 'password': password, 'name': name});
-
-  //   return Person(email: email, password: password, name: name);
-  // }
 

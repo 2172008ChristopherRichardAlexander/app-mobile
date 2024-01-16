@@ -6,7 +6,7 @@ part of 'getpocket_user_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getPocketUserHash() => r'84d4a68fbfa565be07ed8b61f29d291a09952616';
+String _$getPocketUserHash() => r'a78480254c3328365bdb7c0ff34e23f7c1b4f11c';
 
 /// See also [GetPocketUser].
 @ProviderFor(GetPocketUser)

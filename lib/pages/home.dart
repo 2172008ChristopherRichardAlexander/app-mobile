@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:tugasbesar_2172008/entities/pocket.dart';
 import 'package:tugasbesar_2172008/pages/addpocket.dart';
+import 'package:tugasbesar_2172008/pages/editprofile.dart';
 import 'package:tugasbesar_2172008/pages/history.dart';
 import 'package:tugasbesar_2172008/pages/pocket.dart';
 import 'package:tugasbesar_2172008/pages/requestpage.dart';
@@ -405,14 +406,49 @@ class HomePage extends ConsumerWidget {
             ],
           ),
         ),
-        
       ),
-      
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 255, 154, 0),
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.camera),
+            label: 'QRIS',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomePage(),
+              ),
+            );
+          } else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const EditProfilePage(),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
+}
 
-  Future<List<Pocket?>> fetchPocketData(
-      String email, BuildContext context, WidgetRef ref) async {
-    return await ref.read(showPocketUserProvider.notifier).showPocket(email);
-  }
+Future<List<Pocket?>> fetchPocketData(
+    String email, BuildContext context, WidgetRef ref) async {
+  return await ref.read(showPocketUserProvider.notifier).showPocket(email);
 }
