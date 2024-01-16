@@ -7,6 +7,12 @@ class GetMoney {
   final money = TextEditingController();
 }
 
+Future<void> fetchData(BuildContext context, WidgetRef ref) async {
+  String email = ref.watch(userDataProvider).value?.email ?? '';
+  String password = ref.watch(userDataProvider).value?.password ?? '';
+  await ref.read(userDataProvider.notifier).login(email, password);
+}
+
 final moneyDataProvider = Provider((ref) => GetMoney());
 
 class RequestPage extends ConsumerWidget {
@@ -18,44 +24,112 @@ class RequestPage extends ConsumerWidget {
     int moneyUser = ref.watch(userDataProvider).value!.balance;
     final moneyData = ref.read(moneyDataProvider);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Request Page'),
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextFormField(
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              decoration: const InputDecoration(
-                labelText: 'Enter a number',
+      resizeToAvoidBottomInset: false,
+      backgroundColor: const Color.fromARGB(255, 255, 154, 0),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Container(
+              height: 380,
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.only(top: 40, bottom: 15),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
               ),
-              controller: moneyData.money,
-            ),
-            const SizedBox(
-                height: 20), // Add some space between TextField and button
-            ElevatedButton(
-              onPressed: () async {
-                final money = moneyData.money.text;
-                int? intMoney = int.tryParse(money);
-                int? sumMoney = intMoney! + moneyUser;
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const HomePage(),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomePage()),
+                          );
+                        },
+                      ),
+                      const Text(
+                        'Request Money',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Color.fromARGB(255, 184, 133, 23),
+                        ),
+                      ),
+                      const SizedBox(width: 40), // Adjust as needed
+                    ],
                   ),
-                );
-                final email = emailUser.text;
-                await ref
-                    .read(userDataProvider.notifier)
-                    .money(sumMoney, email);
-              },
-              child: const Text('Submit'),
+                  const SizedBox(height: 40),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: TextField(
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                      controller: moneyData.money,
+                      decoration: const InputDecoration(
+                        labelText: 'Enter a number',
+                        prefixIcon: Icon(Icons.money),
+                        border: OutlineInputBorder(),
+                        labelStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 184, 133, 23),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  Container(
+                    height: 40,
+                    width: 180,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color(0xffB81736),
+                          Color.fromARGB(255, 187, 120, 32),
+                        ],
+                      ),
+                    ),
+                    child: TextButton(
+                      onPressed: () async {
+                        final money = moneyData.money.text;
+                        int? intMoney = int.tryParse(money);
+                        int? sumMoney = intMoney! + moneyUser;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomePage(),
+                          ),
+                        );
+                        await fetchData(context, ref);
+                        final email = emailUser.text;
+                        await ref
+                            .read(userDataProvider.notifier)
+                            .money(sumMoney, email);
+                      },
+                      child: const Text(
+                        'Submit',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

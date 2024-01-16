@@ -91,15 +91,21 @@ class SupabaseUserRepository implements UserRepository {
     return;
   }
 
+ 
+
   @override
-  Future<History?> showHistory(String emailUser) async {
+  Future<void> addPocket(int balance, String email, String description) async {
     await Future.delayed(const Duration(seconds: 2));
-    final response =
-        await supabase.from('history').select('*').eq('email', emailUser);
-    final emails = response[0]['email'] as String;
-    final amounts = response[0]['amount'] as int;
-    final descriptions = response[0]['desciprion'] as String;
-    return History(email: emails, amount: amounts, description: descriptions);
+    await supabase
+        .from("pocket")
+        .insert({'email': email, 'balance': balance, 'title': description});
+
+    final data = await getUserByEmail(email);
+
+    final moneyUser = data!.balance;
+    final sumOfMoney = moneyUser - balance;
+
+    updateMoney(sumOfMoney, email);
   }
 }
 
