@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tugasbesar_2172008/pages/camera.dart';
 import 'package:tugasbesar_2172008/pages/home.dart';
 import 'package:tugasbesar_2172008/pages/login.dart';
 import 'package:tugasbesar_2172008/provider/user_data_provider.dart';
@@ -31,14 +32,14 @@ class EditProfilePage extends ConsumerWidget {
     TextEditingController phoneData = profileData.phone;
     TextEditingController addressData = profileData.address;
 
-    TextEditingController email =
-        TextEditingController(text: ref.watch(userDataProvider).value?.email??'');
-    TextEditingController name =
-        TextEditingController(text: ref.watch(userDataProvider).value?.name??'');
-    TextEditingController phone =
-        TextEditingController(text: ref.watch(userDataProvider).value?.phone??'');
-    TextEditingController address =
-        TextEditingController(text: ref.watch(userDataProvider).value?.address??'');
+    TextEditingController email = TextEditingController(
+        text: ref.watch(userDataProvider).value?.email ?? '');
+    TextEditingController name = TextEditingController(
+        text: ref.watch(userDataProvider).value?.name ?? '');
+    TextEditingController phone = TextEditingController(
+        text: ref.watch(userDataProvider).value?.phone ?? '');
+    TextEditingController address = TextEditingController(
+        text: ref.watch(userDataProvider).value?.address ?? '');
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -143,11 +144,7 @@ class EditProfilePage extends ConsumerWidget {
                         ),
                       );
                       await ref.read(userDataProvider.notifier).updateUser(
-                            email.text,
-                            name.text,
-                            address.text,
-                            phone.text
-                          );
+                          email.text, name.text, address.text, phone.text);
 
                       profileData.clear();
                     },
@@ -230,6 +227,13 @@ class EditProfilePage extends ConsumerWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => const EditProfilePage(),
+              ),
+            );
+          } else if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => QRScannerPage(),
               ),
             );
           }

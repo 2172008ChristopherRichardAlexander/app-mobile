@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:tugasbesar_2172008/entities/pocket.dart';
 import 'package:tugasbesar_2172008/pages/addpocket.dart';
+import 'package:tugasbesar_2172008/pages/camera.dart';
 import 'package:tugasbesar_2172008/pages/editprofile.dart';
 import 'package:tugasbesar_2172008/pages/history.dart';
 import 'package:tugasbesar_2172008/pages/pocket.dart';
@@ -439,6 +440,13 @@ class HomePage extends ConsumerWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => const EditProfilePage(),
+              ),
+            );
+          } else if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => QRScannerPage(),
               ),
             );
           }

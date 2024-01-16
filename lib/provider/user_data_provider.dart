@@ -26,7 +26,6 @@ class UserData extends _$UserData {
   Future<Person?> build() async => null;
   Future<void> login(String emails, String passwords) async {
     state = const AsyncLoading();
-
     Login login = ref.read(loginProvider);
 
     var user = await login(LoginParam(email: emails, password: passwords));

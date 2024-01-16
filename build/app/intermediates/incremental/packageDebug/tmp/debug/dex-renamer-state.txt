@@ -1,4 +1,0 @@
-#Tue Jan 16 08:51:19 WIB 2024
-base.0=C\:\\Users\\chris\\OneDrive\\Desktop\\Maranatha\\Semester 5\\Mobile\\app-mobile\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
-path.0=classes.dex
-renamed.0=classes.dex
