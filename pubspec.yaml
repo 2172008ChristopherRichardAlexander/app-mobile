@@ -31,4 +31,6 @@ flutter:
    - lib/assets/images/cash.png
    - lib/assets/images/request.png
    - lib/assets/images/history.png
+   - lib/assets/images/add.png
+   - lib/assets/images/money.png
     

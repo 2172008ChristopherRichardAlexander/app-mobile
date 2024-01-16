@@ -1,16 +1,16 @@
-import 'package:tugasbesar_2172008/data/repositories/user_repository.dart';
+import 'package:tugasbesar_2172008/data/repositories/history_repository.dart';
 import 'package:tugasbesar_2172008/entities/history.dart';
 import 'package:tugasbesar_2172008/usecase/history_param.dart';
 import 'usecase.dart';
 
-class HistoryRecord implements Usecase<History?, HistoryParam> {
-  final UserRepository userRepository;
+class HistoryRecord implements Usecase<List<History?>, HistoryParam> {
+  final HistoryRepository historyRepository;
 
-  HistoryRecord({required this.userRepository});
+  HistoryRecord({required this.historyRepository});
 
   @override
-  Future<History?> call(HistoryParam params) async {
+  Future<List<History?>> call(HistoryParam params) async {
     // autentikasi menggunakan params.email & params.password
-     return await userRepository.showHistory(params.email);
+     return await historyRepository.showHistory(params.email);
   }
 }

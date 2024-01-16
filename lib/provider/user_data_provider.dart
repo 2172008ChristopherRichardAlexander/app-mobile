@@ -1,19 +1,19 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tugasbesar_2172008/entities/person.dart';
-import 'package:tugasbesar_2172008/provider/history_provider.dart';
 import 'package:tugasbesar_2172008/provider/money_provider.dart';
+import 'package:tugasbesar_2172008/provider/pockets_provider.dart';
 import 'package:tugasbesar_2172008/provider/singup_provider.dart';
 import 'package:tugasbesar_2172008/provider/transfer_provider.dart';
-import 'package:tugasbesar_2172008/usecase/history_param.dart';
 import 'package:tugasbesar_2172008/usecase/login.dart';
 import 'package:tugasbesar_2172008/usecase/login_param.dart';
 import 'package:tugasbesar_2172008/usecase/money.dart';
 import 'package:tugasbesar_2172008/usecase/money_param.dart';
+import 'package:tugasbesar_2172008/usecase/pockets.dart';
+import 'package:tugasbesar_2172008/usecase/pockets_param.dart';
 import 'package:tugasbesar_2172008/usecase/signup.dart';
 import 'package:tugasbesar_2172008/usecase/signup_param.dart';
 import 'package:tugasbesar_2172008/usecase/transfer.dart';
 import 'package:tugasbesar_2172008/usecase/transfer_param.dart';
-import '../usecase/history.dart';
 import 'login_provider.dart';
 part 'user_data_provider.g.dart';
 
@@ -21,7 +21,6 @@ part 'user_data_provider.g.dart';
 class UserData extends _$UserData {
   @override
   Future<Person?> build() async => null;
-
   Future<void> login(String emails, String passwords) async {
     state = const AsyncLoading();
 
@@ -31,6 +30,7 @@ class UserData extends _$UserData {
     state = AsyncData(user);
   }
 
+
   Future<void> signup(String emails, String passwords, String text) async {
     state = const AsyncLoading();
 
@@ -38,7 +38,7 @@ class UserData extends _$UserData {
 
     await signUp(SingupParam(email: emails, password: passwords, name: text));
 
-    state = const AsyncData(null);
+    
   }
 
   Future<void> money(
@@ -67,16 +67,19 @@ class UserData extends _$UserData {
         amount: amounts));
   }
   
-  Future<void> history(String emails) async {
+
+
+  Future<void> pockets(String emails,int balance, String title) async {
     state = const AsyncLoading();
 
-    HistoryRecord history = ref.read(historyProvider);
+    Pockets pocket = ref.read(pocketsProvider);
 
-    await history(
-        HistoryParam(email: emails));
+    await pocket(
+        PocketsParam(email: emails, balance: balance, title: title));
 
-    state = const AsyncData(null);
+    
   }
+
 
   Future<void> logout() async {
     // Panggil usecase logout

@@ -43,13 +43,13 @@ Widget getSelectedWidget({required int index}) {
   Widget widget;
   switch (index) {
     case 1:
-      widget = const HomePage();
+      widget =  HomePage();
       break;
     case 2:
       widget = const EditProfilePage();
       break;
     default:
-      widget = const HomePage();
+      widget =  HomePage();
       break;
   }
   return widget;
